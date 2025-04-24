@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 
@@ -34,7 +35,12 @@ merged = pd.merge(students, qla_clean, how='inner', on='student_id')
 
 # group by and calculate the mark diff within each group.
 #TODO: for some reason it always produces NaNs as a resuls no matter what I tried
-merged['progress'] = merged.groupby(['student_id', 'assessment_id'])['mark'].diff()
+merged['progress'] = merged.groupby(['student_id'])['mark'].diff()
 merged = merged.dropna()
 print(merged)
+
+
+#Q3
+merged.hist(column='progress')
+plt.show()
 
