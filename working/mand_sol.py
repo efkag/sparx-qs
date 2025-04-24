@@ -28,14 +28,13 @@ assess_thresh = 2
 qla_clean = qla_df.dropna(axis=0, subset='mark')
 grouped = qla_clean.groupby(['student_id'])['assessment_id'].count().reset_index()
 students = grouped[grouped['assessment_id'] >= assess_thresh]['student_id']
-print(students)
 
+# keep only the students who have >= 2 assessments
 merged = pd.merge(students, qla_clean, how='inner', on='student_id')
 
-print(merged)
-
-
+# group by and calculate the mark diff within each group.
+#TODO: for some reason it always produces NaNs as a resuls no matter what I tried
 merged['progress'] = merged.groupby(['student_id', 'assessment_id'])['mark'].diff()
 merged = merged.dropna()
-print(grouped)
+print(merged)
 
